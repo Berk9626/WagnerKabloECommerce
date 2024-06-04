@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ECommerce.BusinessLayer.Abstract;
-using ECommerce.DTOs.DTO.About;
+
 using ECommerce.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,21 +23,21 @@ namespace ECommerce.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult AboutList()
-        {
-            try
-            {
-                var values = _aboutService.TGetList();
-               _mapper.Map<AboutDto>(values);
+        //[HttpGet]
+        //public IActionResult AboutList()
+        //{
+        //    try
+        //    {
+        //        var values = _aboutService.TGetList();
+        //       _mapper.Map<AboutDto>(values);
            
-                return Ok(values);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+        //        return Ok(values);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
         //---------------------------------------------------------
         [HttpGet("{id}")]
         public IActionResult GetAbout(int id)
