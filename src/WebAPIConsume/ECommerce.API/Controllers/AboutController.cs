@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿//using AutoMapper;
 using ECommerce.BusinessLayer.Abstract;
 
 using ECommerce.Entity;
@@ -13,14 +13,14 @@ namespace ECommerce.API.Controllers
     public class AboutController : ControllerBase
     {
         private readonly IAboutService _aboutService;
-        private readonly IMapper _mapper;
+       // private readonly IMapper _mapper;
 
 
 
-        public AboutController(IAboutService aboutService, IMapper mapper)
+        public AboutController(IAboutService aboutService /*IMapper mapper*/)
         {
             _aboutService = aboutService;
-            _mapper = mapper;
+            //_mapper = mapper;
         }
 
         //[HttpGet]
