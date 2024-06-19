@@ -1,4 +1,5 @@
-﻿using ECommerce.Entity;
+﻿using ECommerce.BusinessLayer.DTOs.AboutDto;
+using ECommerce.Entity;
 using Portal.BusinessLayer.Abstract;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,12 @@ using System.Threading.Tasks;
 
 namespace ECommerce.BusinessLayer.Abstract
 {
-    public interface IAboutService : IGenericService<About>
+    public interface IAboutService 
     {
+        List<ResultAboutDto> GetAll();
+        void Add(CreateAboutDto aboutDto);
+        void Update(UpdateAboutDto aboutDto);
+        void Delete(int id);
+        GetByIdAboutDto GetById(int id);
     }
 }

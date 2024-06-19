@@ -13,7 +13,7 @@ namespace ECommerce.DataAccesLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=DESKTOP-C4RG7G4\\SQLEXPRESS; database=WagnerKablo; integrated security=true; TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("server=DESKTOP-IMFRFJD\\SQLSERVER2022EXP; database=WagnerKablo; integrated security=true; TrustServerCertificate=True");
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<About> Abouts { get; set; }

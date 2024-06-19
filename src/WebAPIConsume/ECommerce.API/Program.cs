@@ -1,11 +1,14 @@
+using AutoMapper;
 using ECommerce.API.Services;
 using ECommerce.BusinessLayer.Abstract;
 using ECommerce.BusinessLayer.Concrete;
+using ECommerce.BusinessLayer.DTOs.AboutDto;
 using ECommerce.DataAccesLayer.Abstract;
 using ECommerce.DataAccesLayer.Concrete;
 using ECommerce.DataAccesLayer.EntityFramework;
 using ECommerce.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +20,7 @@ builder.Services.AddSwaggerGen();
 
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(ECommerce.BusinessLayer.Mapping.AutoMapper));
 builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -45,13 +49,15 @@ builder.Services.AddAuthentication(options =>
 
 
 
-builder.Services.AddTransient<IAuthService,AuthService>();
+
+
+builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 
-//builder.Services.AddControllers(
-//options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true).AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+builder.Services.AddControllers(
+options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true).AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 
 
@@ -63,10 +69,10 @@ builder.Services.AddScoped<IAboutDal, EfAboutDal>();
 builder.Services.AddScoped<IEmployeeService, EmployeeManager>();
 builder.Services.AddScoped<IEmployeeDal, EfEmployeeDal>();
 
-builder.Services.AddScoped<IContactService, ContactManager>();
-builder.Services.AddScoped<IContactDal, EfContactDal>();
-builder.Services.AddScoped<IProductService, ProductManager>();
-builder.Services.AddScoped<IProductDal, EfProductDal>();
+//builder.Services.AddScoped<IContactService, ContactManager>();
+//builder.Services.AddScoped<IContactDal, EfContactDal>();
+//builder.Services.AddScoped<IProductService, ProductManager>();
+//builder.Services.AddScoped<IProductDal, EfProductDal>();
 
 builder.Services.AddCors(opt =>
 {
@@ -92,3 +98,95 @@ app.MapControllers();
 app.UseCors("WagnerApi");
 
 app.Run();
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
+//using Microsoft.AspNetCore.Builder;
+//using Microsoft.AspNetCore.Hosting;
+//using Microsoft.AspNetCore.Identity;
+//using Microsoft.EntityFrameworkCore;
+//using Microsoft.Extensions.Configuration;
+//using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.Extensions.Hosting;
+//using Microsoft.IdentityModel.Tokens;
+//using System.Text;
+//using ECommerce.DataAccesLayer.Abstract;
+//using ECommerce.DataAccesLayer.Concrete;
+//using ECommerce.DataAccesLayer.EntityFramework;
+//using ECommerce.Entity;
+//using ECommerce.BusinessLayer.Abstract;
+//using ECommerce.BusinessLayer.Concrete;
+//using ECommerce.BusinessLayer.DTOs.AboutDto;
+//using AutoMapper;
+//using ECommerce.API.Services;
+
+//var builder = WebApplication.CreateBuilder(args);
+
+//// Add services to the container.
+//builder.Services.AddSwaggerGen();
+
+//builder.Services.AddDbContext<Context>();
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+//{
+//    options.Password.RequiredLength = 5;
+//}).AddEntityFrameworkStores<Context>().AddDefaultTokenProviders();
+
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//}).AddJwtBearer(options =>
+//{
+//    options.TokenValidationParameters = new TokenValidationParameters()
+//    {
+//        ValidateActor = true,
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        RequireExpirationTime = true,
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
+//        ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
+//    };
+//});
+
+//builder.Services.AddTransient<IAuthService, AuthService>();
+//builder.Services.AddControllers();
+
+//builder.Services.AddControllers(options =>
+//    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true)
+//    .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+//builder.Services.AddEndpointsApiExplorer();
+
+//builder.Services.AddScoped<IAboutService, AboutManager>();
+//builder.Services.AddScoped<IAboutDal, EfAboutDal>();
+
+//builder.Services.AddCors(opt =>
+//{
+//    opt.AddPolicy("WagnerApi", opts =>
+//    {
+//        opts.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); //you can get permission every header,method, and more, consume edeceðim alanlar
+//    });
+//});
+
+//// AutoMapper'ý yapýlandýr
+//builder.Services.AddAutoMapper(typeof(Program));
+
+//var app = builder.Build();
+
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+//app.UseAuthentication();
+//app.UseAuthorization();
+
+//app.UseCors("WagnerApi");
+
+//app.MapControllers();
+
+//app.Run();
+
+

@@ -18,29 +18,29 @@ namespace ECommerce.BusinessLayer.Concrete
             _contactDal = contactDal;
         }
 
-        public void TDelete(Contact t)
+        public void TDelete(int id)
         {
-            _contactDal.Delete(t);
+            throw new NotImplementedException();
         }
 
         public Contact TGetById(int id)
         {
-            return _contactDal.GetById(id);
+            throw new NotImplementedException();
         }
 
         public List<Contact> TGetList()
         {
-           return _contactDal.GetList();
+            throw new NotImplementedException();
         }
 
         public void TInsert(Contact t)
         {
-            _contactDal.Insert(t);
+            throw new NotImplementedException();
         }
 
         public void TUpdate(Contact t)
         {
-            _contactDal.Update(t);
+            throw new NotImplementedException();
         }
     }
 }

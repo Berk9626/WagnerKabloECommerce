@@ -1,4 +1,6 @@
-﻿using ECommerce.BusinessLayer.Abstract;
+﻿using AutoMapper;
+using ECommerce.BusinessLayer.Abstract;
+using ECommerce.BusinessLayer.DTOs.AboutDto;
 using ECommerce.DataAccesLayer.Abstract;
 using ECommerce.Entity;
 using System;
@@ -12,35 +14,81 @@ namespace ECommerce.BusinessLayer.Concrete
     public class AboutManager : IAboutService
     {
         private readonly IAboutDal _aboutDal;
+        private readonly IMapper _mapper;
 
-        public AboutManager(IAboutDal aboutDal)
+        public AboutManager(IAboutDal aboutDal, IMapper mapper)
         {
             _aboutDal = aboutDal;
+            _mapper = mapper;
         }
 
-        public void TDelete(About t)
+        public void Add(CreateAboutDto aboutDto)
         {
-            _aboutDal.Delete(t);
+            var aboutEntity = _mapper.Map<About>(aboutDto);
+            _aboutDal.Insert(aboutEntity);
         }
 
-        public About TGetById(int id)
+        public void Delete(int id)
         {
-            return _aboutDal.GetById(id);
+            var aboutEntity = _aboutDal.GetById(id);
+
+            // Veritabanından silme işlemi
+            _aboutDal.Delete(aboutEntity);
         }
 
-        public List<About> TGetList()
+        public List<ResultAboutDto> GetAll()
         {
-           return _aboutDal.GetList();
+            var aboutEntities = _aboutDal.GetList();
+
+            // Varlıkları DTO'lara dönüştürün
+            var resultAboutDtos = _mapper.Map<List<ResultAboutDto>>(aboutEntities);
+
+            return resultAboutDtos;
         }
 
-        public void TInsert(About t)
+        public GetByIdAboutDto GetById(int id)
         {
-            _aboutDal.Insert(t);
+            var aboutEntity = _aboutDal.GetById(id);
+
+            // Varlığı DTO'ya dönüştürün
+            var getByIdAboutDto = _mapper.Map<GetByIdAboutDto>(aboutEntity);
+
+            return getByIdAboutDto;
         }
 
-        public void TUpdate(About t)
+        public void Update(UpdateAboutDto aboutDto)
         {
-            _aboutDal.Update(t);
+            var aboutEntity = _mapper.Map<About>(aboutDto);
+
+            // Veritabanında güncelleme işlemi
+            _aboutDal.Update(aboutEntity);
         }
+
+
+
+        //public void TDelete(About t)
+        //{
+        //    _aboutDal.Delete(t);
+        //}
+
+        //public About TGetById(int id)
+        //{
+        //    return _aboutDal.GetById(id);
+        //}
+
+        //public List<About> TGetList()
+        //{
+        //   return _aboutDal.GetList();
+        //}
+
+        //public void TInsert(About t)
+        //{
+        //    _aboutDal.Insert(t);
+        //}
+
+        //public void TUpdate(About t)
+        //{
+        //    _aboutDal.Update(t);
+        //}
     }
 }

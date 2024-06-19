@@ -1,6 +1,6 @@
 ﻿//using AutoMapper;
 using ECommerce.BusinessLayer.Abstract;
-
+using ECommerce.BusinessLayer.DTOs.AboutDto;
 using ECommerce.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,34 +17,34 @@ namespace ECommerce.API.Controllers
 
 
 
-        public AboutController(IAboutService aboutService /*IMapper mapper*/)
+        public AboutController(IAboutService aboutService)
         {
             _aboutService = aboutService;
-            //_mapper = mapper;
+          
         }
 
-        //[HttpGet]
-        //public IActionResult AboutList()
-        //{
-        //    try
-        //    {
-        //        var values = _aboutService.TGetList();
-        //       _mapper.Map<AboutDto>(values);
-           
-        //        return Ok(values);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex);
-        //    }
-        //}
-        //---------------------------------------------------------
+        [HttpGet]
+        public IActionResult AboutList()
+        {
+            try
+            {
+                var values = _aboutService.GetAll();
+
+
+                return Ok(values);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetAbout(int id)
         {
             try
             {
-                var model = _aboutService.TGetById(id);
+                var model = _aboutService.GetById(id);
                 return Ok(model);
             }
             catch (Exception ex)
@@ -52,13 +52,13 @@ namespace ECommerce.API.Controllers
                 return BadRequest(ex);
             }
         }
-        //---------------------------------------------------------
+       // ---------------------------------------------------------
         [HttpPost]
-        public IActionResult AddAbout(About About)
+        public IActionResult AddAbout(CreateAboutDto createaboutdto)
         {
             try
             {
-                _aboutService.TInsert(About);
+                _aboutService.Add(createaboutdto);
                 return Ok();
             }
             catch (Exception ex)
@@ -68,11 +68,11 @@ namespace ECommerce.API.Controllers
         }
         //---------------------------------------------------------
         [HttpPut]
-        public IActionResult UpdateAbout(About About)
+        public IActionResult UpdateAbout(UpdateAboutDto updateAboutDto)
         {
             try
             {
-                _aboutService.TUpdate(About);
+                _aboutService.Update(updateAboutDto);
                 return Ok();
             }
             catch (Exception ex)

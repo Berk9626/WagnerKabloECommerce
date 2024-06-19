@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace ECommerce.BusinessLayer.Abstract
 {
-    public interface IContactService : IGenericService<Contact>
+    public interface IContactService 
     {
+
     }
 }

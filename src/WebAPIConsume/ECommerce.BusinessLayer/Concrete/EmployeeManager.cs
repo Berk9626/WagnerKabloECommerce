@@ -1,5 +1,9 @@
-﻿using ECommerce.BusinessLayer.Abstract;
+﻿using AutoMapper;
+using ECommerce.BusinessLayer.Abstract;
+using ECommerce.BusinessLayer.DTOs.AboutDto;
+using ECommerce.BusinessLayer.DTOs.EmployeeDto;
 using ECommerce.DataAccesLayer.Abstract;
+using ECommerce.DataAccesLayer.EntityFramework;
 using ECommerce.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,35 +16,47 @@ namespace ECommerce.BusinessLayer.Concrete
     public class EmployeeManager : IEmployeeService
     {
         private readonly IEmployeeDal _employeeDal;
-
-        public EmployeeManager(IEmployeeDal employeeDal)
+        private readonly IMapper _mapper;
+        public EmployeeManager(IEmployeeDal employeeDal, IMapper mapper)
         {
             _employeeDal = employeeDal;
+            _mapper = mapper;
+        }
+        public void Add(CreateEmployeeDto aboutDto)
+        {
+            var aboutEntity = _mapper.Map<Employee>(aboutDto);
+            _employeeDal.Insert(aboutEntity);
         }
 
-        public void TDelete(Employee t)
+        public void Delete(int id)
         {
-            _employeeDal.Delete(t);
+            var employeeEntity = _employeeDal.GetById(id);
+            _employeeDal.Delete(employeeEntity);
+
         }
 
-        public Employee TGetById(int id)
+        public List<ResultEmployeeDto> GetAll()
         {
-            return _employeeDal.GetById(id);
+            var employeeEntities = _employeeDal.GetList();
+
+            // Varlıkları DTO'lara dönüştürün
+            var employeeDtos = _mapper.Map<List<ResultEmployeeDto>>(employeeEntities);
+            return employeeDtos;
         }
 
-        public List<Employee> TGetList()
+        public GetByIdEmployeeDto GetById(int id)
         {
-           return _employeeDal.GetList();
+            var employee = _employeeDal.GetById(id);
+            var employeeDto = _mapper.Map<GetByIdEmployeeDto>(employee);
+            return employeeDto;
         }
 
-        public void TInsert(Employee t)
+        public void Update(UpdateEmployeeDto employeeDto)
         {
-            _employeeDal.Insert(t);
-        }
+            var employeeEntity = _mapper.Map<Employee>(employeeDto);
 
-        public void TUpdate(Employee t)
-        {
-            _employeeDal.Update(t);
+            // Veritabanında güncelleme işlemi
+            _employeeDal.Update(employeeEntity);
         }
     }
 }

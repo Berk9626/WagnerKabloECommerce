@@ -1,4 +1,7 @@
-﻿using ECommerce.BusinessLayer.Abstract;
+﻿using AutoMapper;
+using ECommerce.BusinessLayer.Abstract;
+using ECommerce.BusinessLayer.DTOs.EmployeeDto;
+using ECommerce.BusinessLayer.DTOs.ProductDto;
 using ECommerce.DataAccesLayer.Abstract;
 using ECommerce.Entity;
 using System;
@@ -12,35 +15,40 @@ namespace ECommerce.BusinessLayer.Concrete
     public class ProductManager : IProductService
     {
         private readonly IProductDal _productDal;
-
-        public ProductManager(IProductDal productDal)
+        private readonly IMapper _mapper;
+        public ProductManager(IProductDal productDal, IMapper mapper)
         {
             _productDal = productDal;
+            _mapper = mapper;
+        }
+        public void Add(CreateProductDto createproductdto)
+        {
+            var addedproduct = _mapper.Map<Product>(createproductdto);
+            _productDal.Insert(addedproduct);
         }
 
-        public void TDelete(Product t)
+        public void Delete(int id)
         {
-            _productDal.Delete(t);
+            var deletedproduct = _productDal.GetById(id);
+            _productDal.Delete(deletedproduct);
         }
 
-        public Product TGetById(int id)
+        public List<ResultProductDto> GetAll()
         {
-            return _productDal.GetById(id);
+            var productDto = _productDal.GetList();
+            var productDto2 = _mapper.Map<List<ResultProductDto>>(productDto);
+            return productDto2;
+
         }
 
-        public List<Product> TGetList()
+        public GetByIdProductDto GetById(int id)
         {
-            return _productDal.GetList();
+            throw new NotImplementedException();
         }
 
-        public void TInsert(Product t)
+        public void Update(UpdateProductDto updateproductdto)
         {
-            _productDal.Insert(t);
-        }
-
-        public void TUpdate(Product t)
-        {
-            _productDal.Update(t);
+            throw new NotImplementedException();
         }
     }
 }
