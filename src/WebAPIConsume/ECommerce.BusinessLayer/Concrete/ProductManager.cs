@@ -3,6 +3,7 @@ using ECommerce.BusinessLayer.Abstract;
 using ECommerce.BusinessLayer.DTOs.EmployeeDto;
 using ECommerce.BusinessLayer.DTOs.ProductDto;
 using ECommerce.DataAccesLayer.Abstract;
+using ECommerce.DataAccesLayer.EntityFramework;
 using ECommerce.Entity;
 using System;
 using System.Collections.Generic;
@@ -43,12 +44,17 @@ namespace ECommerce.BusinessLayer.Concrete
 
         public GetByIdProductDto GetById(int id)
         {
-            throw new NotImplementedException();
+            var product = _productDal.GetById(id);
+            var productDto = _mapper.Map<GetByIdProductDto>(product);
+            return productDto;
         }
 
         public void Update(UpdateProductDto updateproductdto)
         {
-            throw new NotImplementedException();
+            var productEntity = _mapper.Map<Product>(updateproductdto);
+
+            // Veritabanında güncelleme işlemi
+            _productDal.Update(productEntity);
         }
     }
 }

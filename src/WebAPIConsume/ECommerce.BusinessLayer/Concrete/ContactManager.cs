@@ -1,4 +1,7 @@
-﻿using ECommerce.BusinessLayer.Abstract;
+﻿using AutoMapper;
+using ECommerce.BusinessLayer.Abstract;
+using ECommerce.BusinessLayer.DTOs.ContactDto;
+using ECommerce.BusinessLayer.DTOs.ProductDto;
 using ECommerce.DataAccesLayer.Abstract;
 using ECommerce.Entity;
 using System;
@@ -12,35 +15,45 @@ namespace ECommerce.BusinessLayer.Concrete
     public class ContactManager : IContactService
     {
         private readonly IContactDal _contactDal;
-
-        public ContactManager(IContactDal contactDal)
+        private readonly IMapper _mapper;
+        public ContactManager(IContactDal contactDal, IMapper mapper)
         {
             _contactDal = contactDal;
+            _mapper = mapper;
+        }
+        public void Add(CreateContactDto contactdto)
+        {
+            var addedcont = _mapper.Map<Contact>(contactdto);
+            _contactDal.Insert(addedcont);
         }
 
-        public void TDelete(int id)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var deletedcontact = _contactDal.GetById(id);
+            _contactDal.Delete(deletedcontact);
         }
 
-        public Contact TGetById(int id)
+        public List<ResultContactDto> GetAll()
         {
-            throw new NotImplementedException();
+            var contactDto = _contactDal.GetList();
+            var contactdto2 = _mapper.Map<List<ResultContactDto>>(contactDto);
+            return contactdto2;
+
         }
 
-        public List<Contact> TGetList()
+        public GetByIdContactDto GetById(int id)
         {
-            throw new NotImplementedException();
+            var contact = _contactDal.GetById(id);
+            var contactDto = _mapper.Map<GetByIdContactDto>(contact);
+            return contactDto;
         }
 
-        public void TInsert(Contact t)
+        public void Update(UpdateContactDto updatecontactdto)
         {
-            throw new NotImplementedException();
-        }
+            var contactent = _mapper.Map<Contact>(updatecontactdto);
 
-        public void TUpdate(Contact t)
-        {
-            throw new NotImplementedException();
+            // Veritabanında güncelleme işlemi
+            _contactDal.Update(contactent);
         }
     }
 }

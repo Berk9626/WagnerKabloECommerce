@@ -69,10 +69,10 @@ builder.Services.AddScoped<IAboutDal, EfAboutDal>();
 builder.Services.AddScoped<IEmployeeService, EmployeeManager>();
 builder.Services.AddScoped<IEmployeeDal, EfEmployeeDal>();
 
-//builder.Services.AddScoped<IContactService, ContactManager>();
-//builder.Services.AddScoped<IContactDal, EfContactDal>();
-//builder.Services.AddScoped<IProductService, ProductManager>();
-//builder.Services.AddScoped<IProductDal, EfProductDal>();
+builder.Services.AddScoped<IContactService, ContactManager>();
+builder.Services.AddScoped<IContactDal, EfContactDal>();
+builder.Services.AddScoped<IProductService, ProductManager>();
+builder.Services.AddScoped<IProductDal, EfProductDal>();
 
 builder.Services.AddCors(opt =>
 {

@@ -4,8 +4,12 @@ namespace Portal.WEBUI.ViewComponent.Default
 {
     public class _ContactPartial : Microsoft.AspNetCore.Mvc.ViewComponent
     {
-        public IViewComponentResult Invoke()
+   
+        public async Task< IViewComponentResult> InvokeAsync()
         {
+            
+
+
             return View();
         }
     }
